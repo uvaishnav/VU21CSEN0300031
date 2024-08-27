@@ -37,6 +37,7 @@ const fetchNumbers = async (quant) => {
 
     try {
         const response = await axios.get(url, { 
+            timeout : 5000,
             headers: {
             Authorization: `Bearer ${process.env.access_token}`
             }
@@ -63,7 +64,7 @@ app.get('/numbers/:quant', async (req, res) => {
     const { quant } = req.params;
 
     try{
-        const NewNumb = await fetchNumbers(quant);
+        const newNumb = await fetchNumbers(quant);
 
         const windowStatePrev = [...windowState];
         newNumb.forEach(num => windowState.add(num));
