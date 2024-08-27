@@ -52,18 +52,20 @@ const main = async() => {
         "accessCode" : process.env.access_code,
     }
 
-    const {client_id, client_secret} = await getRegistered(regester_body);
+    // const {client_id, client_secret} = await getRegistered(regester_body);
 
     auth_body = {
         "companyName" : process.env.company_name,
-        "clientID" : client_id,
-        "clientSecret" : client_secret,
+        "clientID" : '8848cdab-dacd-4c92-8ba5-6e8cffcc7f39',
+        "clientSecret" : 'BhuakaQwaTSmFGfS',
         "ownerName" : process.env.owner_name,
         "ownerEmail" : process.env.owner_email,
         "rollNo" : process.env.roll_number,
     }
 
     const access_token = await getAuth(auth_body);
+
+    console.log(access_token);
 }
 
 main();

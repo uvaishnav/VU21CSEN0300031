@@ -21,6 +21,7 @@ const fetchNumbers = async (quant) => {
     switch(quant) {
         case 'p':
             url = primes_url;
+            console.log(url);
             break;
         case 'f':
             url = fibo_url;
@@ -37,11 +38,14 @@ const fetchNumbers = async (quant) => {
 
     try {
         const response = await axios.get(url, { 
-            timeout : 5000,
+            // timeout : 5000,
             headers: {
             Authorization: `Bearer ${process.env.access_token}`
             }
         });
+
+        console.log(`Fetched numbers from ${url}`);
+
         return response.data.numbers;
     } 
     catch (error) {
@@ -63,14 +67,25 @@ let windowState = new Set(); // to ensure the numbers sre unique
 app.get('/numbers/:quant', async (req, res) => {
     const { quant } = req.params;
 
+    console.log(`Fetching ${quant} numbers`);
+
     try{
         const newNumb = await fetchNumbers(quant);
 
+        console.log(newNumb);
+
         const windowStatePrev = [...windowState];
+        console.log(windowStatePrev)
+
         newNumb.forEach(num => windowState.add(num));
 
+        console.log(windowState)
+        console.log(windowState.size)
+
         while(windowState.size > windowSize) {
-            windowState.delete(windowStatePrev.shift());  // remove elements at start if size exceeds
+            const [firstElement, ...rest] = [...windowState]; // Spread the Set into an array
+            console.log(firstElement);
+            windowState = new Set(rest); // Recreate the Set without the first element
         }
 
         const response = {

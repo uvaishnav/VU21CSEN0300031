@@ -22,6 +22,8 @@ const fetchProducts = async (companyName, categoryName, params) => {
             params: params
         });
 
+        console.log(`Fetched products from ${companyName}`);
+
         const product_data = response.data;
 
         return product_data.map((product)=>({
