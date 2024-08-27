@@ -38,7 +38,7 @@ const fetchNumbers = async (quant) => {
 
     try {
         const response = await axios.get(url, { 
-            // timeout : 5000,
+            timeout : 500,
             headers: {
             Authorization: `Bearer ${process.env.access_token}`
             }
